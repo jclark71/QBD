@@ -1,0 +1,299 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6007409816A480AC00D09911 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6007409716A480AC00D09911 /* UIKit.framework */; };
+		6007409A16A480AC00D09911 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6007409916A480AC00D09911 /* Foundation.framework */; };
+		6007409C16A480AC00D09911 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6007409B16A480AC00D09911 /* CoreGraphics.framework */; };
+		600740A216A480AC00D09911 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 600740A016A480AC00D09911 /* InfoPlist.strings */; };
+		600740A416A480AC00D09911 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 600740A316A480AC00D09911 /* main.m */; };
+		600740A816A480AC00D09911 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 600740A716A480AC00D09911 /* AppDelegate.m */; };
+		600740AA16A480AC00D09911 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 600740A916A480AC00D09911 /* Default.png */; };
+		600740AC16A480AC00D09911 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 600740AB16A480AC00D09911 /* Default@2x.png */; };
+		600740AE16A480AC00D09911 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 600740AD16A480AC00D09911 /* Default-568h@2x.png */; };
+		600740B116A480AC00D09911 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 600740B016A480AC00D09911 /* ViewController.m */; };
+		600740B416A480AC00D09911 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 600740B216A480AC00D09911 /* ViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6007409316A480AC00D09911 /* opticalFlowTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = opticalFlowTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6007409716A480AC00D09911 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6007409916A480AC00D09911 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6007409B16A480AC00D09911 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6007409F16A480AC00D09911 /* opticalFlowTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "opticalFlowTest-Info.plist"; sourceTree = "<group>"; };
+		600740A116A480AC00D09911 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		600740A316A480AC00D09911 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		600740A516A480AC00D09911 /* opticalFlowTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "opticalFlowTest-Prefix.pch"; sourceTree = "<group>"; };
+		600740A616A480AC00D09911 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		600740A716A480AC00D09911 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		600740A916A480AC00D09911 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		600740AB16A480AC00D09911 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		600740AD16A480AC00D09911 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		600740AF16A480AC00D09911 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		600740B016A480AC00D09911 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		600740B316A480AC00D09911 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6007409016A480AC00D09911 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6007409816A480AC00D09911 /* UIKit.framework in Frameworks */,
+				6007409A16A480AC00D09911 /* Foundation.framework in Frameworks */,
+				6007409C16A480AC00D09911 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6007408816A480AC00D09911 = {
+			isa = PBXGroup;
+			children = (
+				6007409D16A480AC00D09911 /* opticalFlowTest */,
+				6007409616A480AC00D09911 /* Frameworks */,
+				6007409416A480AC00D09911 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6007409416A480AC00D09911 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6007409316A480AC00D09911 /* opticalFlowTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6007409616A480AC00D09911 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6007409716A480AC00D09911 /* UIKit.framework */,
+				6007409916A480AC00D09911 /* Foundation.framework */,
+				6007409B16A480AC00D09911 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6007409D16A480AC00D09911 /* opticalFlowTest */ = {
+			isa = PBXGroup;
+			children = (
+				600740A616A480AC00D09911 /* AppDelegate.h */,
+				600740A716A480AC00D09911 /* AppDelegate.m */,
+				600740AF16A480AC00D09911 /* ViewController.h */,
+				600740B016A480AC00D09911 /* ViewController.m */,
+				600740B216A480AC00D09911 /* ViewController.xib */,
+				6007409E16A480AC00D09911 /* Supporting Files */,
+			);
+			path = opticalFlowTest;
+			sourceTree = "<group>";
+		};
+		6007409E16A480AC00D09911 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6007409F16A480AC00D09911 /* opticalFlowTest-Info.plist */,
+				600740A016A480AC00D09911 /* InfoPlist.strings */,
+				600740A316A480AC00D09911 /* main.m */,
+				600740A516A480AC00D09911 /* opticalFlowTest-Prefix.pch */,
+				600740A916A480AC00D09911 /* Default.png */,
+				600740AB16A480AC00D09911 /* Default@2x.png */,
+				600740AD16A480AC00D09911 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6007409216A480AC00D09911 /* opticalFlowTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 600740B716A480AC00D09911 /* Build configuration list for PBXNativeTarget "opticalFlowTest" */;
+			buildPhases = (
+				6007408F16A480AC00D09911 /* Sources */,
+				6007409016A480AC00D09911 /* Frameworks */,
+				6007409116A480AC00D09911 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = opticalFlowTest;
+			productName = opticalFlowTest;
+			productReference = 6007409316A480AC00D09911 /* opticalFlowTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6007408A16A480AC00D09911 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = GTCMT;
+			};
+			buildConfigurationList = 6007408D16A480AC00D09911 /* Build configuration list for PBXProject "opticalFlowTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6007408816A480AC00D09911;
+			productRefGroup = 6007409416A480AC00D09911 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6007409216A480AC00D09911 /* opticalFlowTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6007409116A480AC00D09911 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				600740A216A480AC00D09911 /* InfoPlist.strings in Resources */,
+				600740AA16A480AC00D09911 /* Default.png in Resources */,
+				600740AC16A480AC00D09911 /* Default@2x.png in Resources */,
+				600740AE16A480AC00D09911 /* Default-568h@2x.png in Resources */,
+				600740B416A480AC00D09911 /* ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6007408F16A480AC00D09911 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				600740A416A480AC00D09911 /* main.m in Sources */,
+				600740A816A480AC00D09911 /* AppDelegate.m in Sources */,
+				600740B116A480AC00D09911 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		600740A016A480AC00D09911 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				600740A116A480AC00D09911 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		600740B216A480AC00D09911 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				600740B316A480AC00D09911 /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		600740B516A480AC00D09911 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		600740B616A480AC00D09911 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		600740B816A480AC00D09911 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "opticalFlowTest/opticalFlowTest-Prefix.pch";
+				INFOPLIST_FILE = "opticalFlowTest/opticalFlowTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		600740B916A480AC00D09911 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "opticalFlowTest/opticalFlowTest-Prefix.pch";
+				INFOPLIST_FILE = "opticalFlowTest/opticalFlowTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6007408D16A480AC00D09911 /* Build configuration list for PBXProject "opticalFlowTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				600740B516A480AC00D09911 /* Debug */,
+				600740B616A480AC00D09911 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		600740B716A480AC00D09911 /* Build configuration list for PBXNativeTarget "opticalFlowTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				600740B816A480AC00D09911 /* Debug */,
+				600740B916A480AC00D09911 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6007408A16A480AC00D09911 /* Project object */;
+}
