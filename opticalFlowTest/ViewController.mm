@@ -26,6 +26,7 @@
 
 
 //Some constants
+#define hopSize 10
 #define acThresh 100
 #define maxCount 200
 #define minDist 5
@@ -68,7 +69,9 @@ using namespace cv;
     
     int64 tickCountStart;
     int64 tickCountEnd;
+    
     double tickCountFrequency;
+    double hopElapsed;
     double elapsed;
     
     int64 frameStart;
@@ -80,6 +83,12 @@ using namespace cv;
     float mags[acThresh];
     float xs[acThresh];
     float ys[acThresh];
+    
+    std::list<float> magsList;
+    std::list<float> xList;
+    std::list<float> yList;
+    int enoughDataInQueue ;
+    std::list<int64>times;
     
     int tempos[numPeaks*3];
     int numTempos;
@@ -94,10 +103,14 @@ using namespace cv;
     NSString *socketHost;
     int socketPort;
     
+    //test
+    int hopSizeCounter;
+    
 }
 
-std::vector<std::pair<float, int>> findPeaks(float values[]);
-float scaleTime(int lags, float lagTime);
+//std::vector<std::pair<float, int>> findPeaks(float values[]);
+//float scaleTime(int lags, float lagTime);
+//std::vector<int> autoCorrList(std::list<float> values, float time);
 
 
 @end
@@ -156,11 +169,18 @@ float scaleTime(int lags, float lagTime);
     
     _selectedSongs = [[NSMutableArray alloc] initWithObjects: nil];
     
+    magsList.resize(acThresh);
+    xList.resize(acThresh);
+    yList.resize(acThresh);
+    times.resize(acThresh/hopSize);
+    enoughDataInQueue = 0;
+    hopSizeCounter = 0;
+    
 }
 
 - (void)requestFinished:(ENAPIRequest *)request {
     NSAssert1(200 == request.responseStatusCode, @"Expected 200 OK, Got: %d", request.responseStatusCode);
-    NSArray *songs = [request.response valueForKeyPath:@"response.songs"];
+//    NSArray *songs = [request.response valueForKeyPath:@"response.songs"];
     
     
 //    for (int i = 0; i<[songs count]; i++) {
@@ -502,7 +522,9 @@ int calculateMode(std::vector<int> sortTempos){
 
 - (void)processImage:(Mat&)image;
 {
-    //[self calculateFPS];
+    //TODO: timer is being stopped on every hop, making the results inaccurate. Multiple timers needed or data needs to be accumulated.
+    
+    
     [self performSelectorOnMainThread:@selector(calculateFPS) withObject:nil waitUntilDone:NO];
     
     if (activated && !songPlaying) {
@@ -517,7 +539,7 @@ int calculateMode(std::vector<int> sortTempos){
     
         image_prev = image_next.clone();
         features_prev = features_next;
-        //getGray(image, image_next);
+
         cv::extractChannel(image, image_next, 0);
         
         cv::calcOpticalFlowPyrLK(image_prev, image_next, features_prev, features_next, status, err);
@@ -547,17 +569,47 @@ int calculateMode(std::vector<int> sortTempos){
             }
         }
         
-        mags[acCounter] = mag/points;
-        xs[acCounter] = x1/points;
-        ys[acCounter] = y1/points;
+        magsList.pop_back();
+        magsList.push_front(mag/points);
         
-        if (acCounter >= acThresh){
+        xList.pop_back();
+        xList.push_front(x1/points);
+        
+        yList.pop_back();
+        yList.push_front(y1/points);
+
+        
+//        mags[acCounter] = mag/points;
+//        xs[acCounter] = x1/points;
+//        ys[acCounter] = y1/points;
+        
+        if (!enoughDataInQueue && acCounter >= acThresh - 1) {
+            enoughDataInQueue = 1;
+        }
+        
+        if (hopSizeCounter >= hopSize-1){
             
             tickCountEnd = cvGetTickCount();
             tickCountFrequency = cvGetTickFrequency();
-            elapsed = (tickCountEnd-tickCountStart)/tickCountFrequency;
+            hopElapsed = (tickCountEnd-tickCountStart)/tickCountFrequency;
+            tickCountStart = cvGetTickCount();
             
-            printf("\nelapsed = %f\n",elapsed);
+            times.pop_back();
+            times.push_front(hopElapsed);
+            
+            hopSizeCounter = 0;
+            
+            if (enoughDataInQueue) {
+                
+                elapsed = 0;
+                
+                for (std::list<int64>::iterator it = times.begin(); it!= times.end(); ++it) {
+                    elapsed += *it;
+                }
+                
+                printf("elapsed = %f",elapsed);
+            
+//            printf("\nelapsed = %f\n",elapsed);
             acCounter = 0;
             
             for (int i = 0; i<sizeof(tempos)/sizeof(int); i++) {
@@ -565,36 +617,66 @@ int calculateMode(std::vector<int> sortTempos){
             }
             numTempos = 0;
             
-            printf("\nmags\n");
-            std::vector<int>magTempos = calculateAutocorrelation(mags, elapsed);
+//           printf("\nmags\n");
+//            std::vector<int>magTempos = calculateAutocorrelation(mags, elapsed);
+//            for (int i = 0; i<numPeaks; i++) {
+//                if (magTempos[i] != -1){
+//                    tempos[numTempos] = magTempos[i];
+//                    numTempos++;
+//                }
+//                else break;
+//            }
+           // printf("\nxs\n");
+            
+//            printf("\nmags - list\n");
+            std::vector<int>magTempos_list = autoCorrList(magsList, elapsed);
             for (int i = 0; i<numPeaks; i++) {
-                if (magTempos[i] != -1){
-                    tempos[numTempos] = magTempos[i];
-                    numTempos++;
-                }
-                else break;
-            }
-            printf("\nxs\n");
-
-            std::vector<int>xTempos = calculateAutocorrelation(xs, elapsed);
-            for (int i = 0; i<numPeaks; i++) {
-                if (xTempos[i] != -1){
-                    tempos[numTempos] = xTempos[i];
-                    numTempos++;
-                }
-                else break;
-            }
-            printf("\nys\n");
-
-            std::vector<int>yTempos = calculateAutocorrelation(ys, elapsed);
-            for (int i = 0; i<numPeaks; i++) {
-                if (yTempos[i] != -1){
-                    tempos[numTempos] = yTempos[i];
+                if (magTempos_list[i] != -1){
+                    tempos[numTempos] = magTempos_list[i];
                     numTempos++;
                 }
                 else break;
             }
             
+            std::vector<int>xTempos_list = autoCorrList(xList, elapsed);
+            for (int i = 0; i<numPeaks; i++) {
+                if (xTempos_list[i] != -1){
+                    tempos[numTempos] = xTempos_list[i];
+                    numTempos++;
+                }
+                else break;
+            }
+//            printf("\nys\n");
+
+            std::vector<int>yTempos_list = autoCorrList(yList, elapsed);
+            for (int i = 0; i<numPeaks; i++) {
+                if (yTempos_list[i] != -1){
+                    tempos[numTempos] = yTempos_list[i];
+                    numTempos++;
+                }
+                else break;
+            }
+
+//            std::vector<int>xTempos = calculateAutocorrelation(xs, elapsed);
+//            for (int i = 0; i<numPeaks; i++) {
+//                if (xTempos[i] != -1){
+//                    tempos[numTempos] = xTempos[i];
+//                    numTempos++;
+//                }
+//                else break;
+//            }
+////            printf("\nys\n");
+//
+//            std::vector<int>yTempos = calculateAutocorrelation(ys, elapsed);
+//            for (int i = 0; i<numPeaks; i++) {
+//                if (yTempos[i] != -1){
+//                    tempos[numTempos] = yTempos[i];
+//                    numTempos++;
+//                }
+//                else break;
+//            }
+            
+                
             std::vector<int>vectorTempos;
             
             for (int j = 0;j<sizeof(tempos)/sizeof(int); j++){
@@ -605,6 +687,13 @@ int calculateMode(std::vector<int> sortTempos){
             std::sort(vectorTempos.begin(),vectorTempos.end());
             std::reverse(vectorTempos.begin(), vectorTempos.end());
             
+            int theFinalTempo = calculateMode(vectorTempos);
+            printf("tempo = %i\n",theFinalTempo);
+            
+            //testing
+            return;
+            
+/*
             //calculate beat salience/ entropy
             int nOrder = 1;
             
@@ -641,13 +730,11 @@ int calculateMode(std::vector<int> sortTempos){
             printf("\n\nMag Diff: %f\nX Diff: %f\nY Diff: %f\n\n",maxMagDiff,maxXDiff,maxYDiff);
             
             float salience = maxMagDiff;
-            
-            
-            int theFinalTempo = calculateMode(vectorTempos);
         
             [self playSongWithTempo: [NSNumber numberWithInt:theFinalTempo] andSalience:[NSNumber numberWithFloat:salience]];
             
             recalibrate = YES;
+*/
             
             //test
 //              printf("time = %f\n",elapsed);
@@ -664,9 +751,13 @@ int calculateMode(std::vector<int> sortTempos){
 //                printf("%f;\n",ys[i]);
 //            }
 
+                            }
         }
         
+        if (!enoughDataInQueue){
         acCounter++;
+        }
+        hopSizeCounter++;
         
         //std::cout << mag/points << ";" << std::endl;
         
@@ -692,6 +783,8 @@ int calculateMode(std::vector<int> sortTempos){
     cv::extractChannel(image, image_next, 0);
     cv::goodFeaturesToTrack(image_next, features_next, maxCount, qLevel, minDist);
     
+    enoughDataInQueue = 0;
+    hopSizeCounter = 0;
     acCounter = 0;
     tickCountStart = cvGetTickCount();
     
@@ -702,6 +795,54 @@ int roundToNearest5bpm(float tempo){
     
     int rounded = round(tempo / 10.0) * 10;
     return rounded;
+}
+
+std::vector<int> autoCorrList(std::list<float> values, float time){
+    
+    float sum = 0;
+    int i = 0;
+    int length = acThresh;
+    float autoCorrelation[length];
+    //std::list<float> autoCorrelation(acThresh);
+
+    for (std::list<float>::reverse_iterator it_lag = values.rbegin(); it_lag!= values.rend(); ++it_lag) {
+        
+        sum = 0;
+        
+        std::list<float>::reverse_iterator it_k = it_lag;
+        
+        for (std::list<float>::reverse_iterator it_j = values.rbegin(); it_k!= values.rend(); ++it_j) {
+        
+            sum += (*it_j) * (*it_k);
+            //printf("it = %i j = %f i = %f\n",i,*it_j,*it_k);
+        
+            ++it_k;
+        }
+        
+        autoCorrelation[i] = sum/(length-i);
+        i++;
+        
+    }
+    
+    std::vector<int> thetempos(numPeaks,-1);
+    std::vector<std::pair<float, int>> peaks(numPeaks);
+    
+    peaks = findPeaks(autoCorrelation);
+    
+    double lagTime = time/1000/1000/acThresh;
+    
+    std::sort(peaks.begin(),peaks.end());
+    std::reverse(peaks.begin(), peaks.end());
+    
+    for (int i =0; i<peaks.size(); i++) {
+        if (peaks[i].second == -1) break;
+        float tempo = scaleTime(peaks[i].second,lagTime);
+        //printf("%i\n", roundToNearest5bpm(tempo));
+        thetempos[i] = roundToNearest5bpm(tempo);
+    }
+    //printf("\n");
+    return thetempos;
+ 
 }
 
 
@@ -720,6 +861,7 @@ std::vector<int> calculateAutocorrelation(float values[], float time){
         for (int j = 0; j<length - i; j++){
             
             sum += values[j] * values[j+i];
+            //printf("meow it = %i j = %f i = %f\n",i,values[j],values[j+i]);
             
         }
         
@@ -751,7 +893,7 @@ std::vector<int> calculateAutocorrelation(float values[], float time){
         printf("%i\n", roundToNearest5bpm(tempo));
         thetempos[i] = roundToNearest5bpm(tempo);
         }
-    printf("\n");
+    //printf("\n");
     return thetempos;
 }
 
